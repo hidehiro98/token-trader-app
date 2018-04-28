@@ -45,6 +45,8 @@ GEM
       erubi (>= 1.0.0)
       rack (>= 0.9.0)
     bindex (0.5.0)
+    binding_of_caller (0.8.0)
+      debug_inspector (>= 0.0.1)
     builder (3.2.3)
     byebug (9.1.0)
     coderay (1.1.2)
@@ -58,6 +60,7 @@ GEM
     commonjs (0.2.7)
     concurrent-ruby (1.0.5)
     crass (1.0.2)
+    debug_inspector (0.0.3)
     devise (4.3.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -207,6 +210,7 @@ PLATFORMS
 
 DEPENDENCIES
   better_errors
+  binding_of_caller
   byebug
   coffee-rails (~> 4.2)
   devise
@@ -229,4 +233,4 @@ DEPENDENCIES
   web-console (>= 3.3.0)
 
 BUNDLED WITH
-   1.15.4
+   1.16.0
