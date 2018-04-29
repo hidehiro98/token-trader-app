@@ -11,6 +11,7 @@ class HashedusersController < ApplicationController
     ether_account_password = hash.update(password).to_s
     @hasheduser.ether_account_password = ether_account_password
     @hasheduser.ether_account = smartContract.createGethAccount(ether_account_password)
+    @hasheduser.username = username
     if @hasheduser.save
       puts "Success create hashed user account"
       puts "Hashed username result: #{@hasheduser.hashed_username}"

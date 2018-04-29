@@ -16,7 +16,7 @@ class TokensController < ApplicationController
 
   def create
     @token = Token.new(tokens_params)
-    @hasheduser = Hasheduser.find(current_user.id)
+    @hasheduser = Hasheduser.find_by(username: current_user.username)
     ether_account = @hasheduser.ether_account
     @token.owner_id = @hasheduser.id
     @token.balanceTokens = @token.totalTokens
@@ -25,6 +25,7 @@ class TokensController < ApplicationController
     ether_account_password = @hasheduser.ether_account_password
     # Execute smart contract
     @token.token_address, deploy_try_result = smartContract.deployERC20Token(ether_account, ether_account_password, @token.name, @token.symbol, @token.totalTokens.to_i)
+    p deploy_try_result
     if deploy_try_result && @token.save
       # Create Posession Table
       @posession = Posession.new

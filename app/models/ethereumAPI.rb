@@ -20,6 +20,7 @@ class EthereumAPI
     # TODO: Error handling when executing Smart Contract
     @client = Ethereum::IpcClient.new(ETHEREUM_ADDRESS)
     @client.personal_unlock_account(owner_address, ether_account_password)
+    @client.personal_unlock_account(SUPPLIER_ADDRESS, SUPPLIER_PASSWORD)
   end
 
   def deployERC20Token(owner_address, ether_account_password, name, symbol, totalTokens)
@@ -27,6 +28,11 @@ class EthereumAPI
     # Exception handling
     begin
       @contract = Ethereum::Contract.create(file: ETHEREUM_TOKEN_PATH, client: @client)
+
+      # key = Eth::Key.new
+      # @contract.key = key
+      # puts key.address
+
       # ISSUE: 一度ロックがかかると解除できない ⇒ contractのdeployに失敗する
       # smart contractのデプロイ時にtotalTokensの型がfloatではエラーが起きるためinteger型にキャストした
       @address = @contract.deploy_and_wait(owner_address, name, symbol, totalTokens.to_i)
@@ -75,7 +81,10 @@ class EthereumAPI
     createAccountResult = JSON.parse(createAccountAtJSON)
     etherAccount = createAccountResult['result'].to_s
     sendEtherForGas(etherAccount)
+
+    # personal_new_account was deprecated
     # @client.personal_unlock_account(etherAccount, password, 0)
+
     puts "createGethAccount Result: #{etherAccount}"
     return etherAccount
   end
